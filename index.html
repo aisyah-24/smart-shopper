@@ -1,38 +1,118 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Smart Shopper</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#182033;background:#f5f7fb}
-*{box-sizing:border-box}body{margin:0}
-.wrap{max-width:500px;margin:0 auto;padding:22px 18px 30px}
-header{display:flex;align-items:center;gap:12px;margin:4px 0 8px}
-.logo{width:52px;height:52px;border-radius:16px;background:#e8efff;display:grid;place-items:center;font-size:27px}
-h1{font-size:26px;margin:0;letter-spacing:-.5px}
-.sub{color:#697386;margin:0 0 22px}
-.card{display:flex;align-items:center;gap:14px;padding:17px;margin:12px 0;border-radius:17px;color:white;box-shadow:0 4px 12px #16203312}
-.dot{font-size:25px;flex:0 0 35px}
-.name{font-weight:800;font-size:16px;letter-spacing:.5px}
-.desc{margin-top:4px;font-size:15px}
-.blue{background:#2563eb}.green{background:#168447}.purple{background:#7c3aed}
-.yellow{background:#facc15;color:#242424}.orange{background:#ea580c}
-.tip{background:white;border:1px solid #e5e9f2;padding:15px;border-radius:15px;color:#5b6474;font-size:14px;margin-top:20px}
-footer{text-align:center;color:#98a2b3;font-size:12px;margin-top:20px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#1d2939}
+header{background:#173f35;color:white;padding:22px 16px;text-align:center}
+header h1{margin:0;font-size:29px}
+header p{margin:8px 0 0;color:#d7eee5}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:14px;background:white;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #0001}
+button{border:0;border-radius:20px;padding:10px 14px;background:#e8eee9;color:#234237;font-weight:bold;cursor:pointer}
+button.active,button:hover{background:#176b50;color:white}
+main{max-width:760px;margin:auto;padding:18px}
+h2{font-size:22px}
+.guide,.promo,.intro{background:white;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 3px 12px #1720330b}
+.guide{display:flex;align-items:center;gap:13px;border-left:8px solid var(--c)}
+.swatch{width:43px;height:43px;border-radius:12px;background:var(--c);flex-shrink:0}
+.guide h3,.promo h3{margin:0 0 5px}
+.guide p,.promo p{margin:4px 0;color:#667085}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tag{display:inline-block;border-radius:20px;padding:5px 9px;font-size:12px;font-weight:bold;background:#edf3ef}
+.price{margin-top:12px}
+.old{text-decoration:line-through;color:#858b98}
+.new{font-size:23px;font-weight:bold;color:#157347}
+.save{color:#157347;font-weight:bold;margin-top:7px}
+.hidden{display:none}
+.note{font-size:13px;color:#667085}
+footer{text-align:center;color:#858b98;font-size:12px;padding:25px}
 </style>
 </head>
 <body>
-<main class="wrap">
-<header><div class="logo">🛒</div><div><h1>Smart Shopper</h1><div style="color:#667085;font-size:14px">Aisle colour guide</div></div></header>
-<p class="sub">Match the colour to find your aisle.</p>
-<div class="card blue"><div class="dot">🔵</div><div><div class="name">BLUE</div><div class="desc">Drinks aisle</div></div></div>
-<div class="card green"><div class="dot">🟢</div><div><div class="name">GREEN</div><div class="desc">Pastry &amp; bakery aisle</div></div></div>
-<div class="card purple"><div class="dot">🟣</div><div><div class="name">PURPLE</div><div class="desc">Other / general items</div></div></div>
-<div class="card yellow"><div class="dot">🟡</div><div><div class="name">YELLOW</div><div class="desc">Fruits &amp; vegetables aisle</div></div></div>
-<div class="card orange"><div class="dot">🟠</div><div><div class="name">ORANGE</div><div class="desc">Snacks aisle</div></div></div>
-<div class="tip">💡 Follow the matching colour label in the shop to find the right aisle.</div>
-<footer>SMART SHOPPER • Scan. Match. Find.</footer>
+<header>
+<h1>🛒 Smart Shopper</h1>
+<p>Find your aisle. Spot a deal. Shop smarter.</p>
+</header>
+
+<nav>
+<button class="active" onclick="showPage('aisles',this)">All Aisles</button>
+<button onclick="showPage('promos',this)">🏷️ Sales & Promos</button>
+<button onclick="filterAisle('Drinks',this)">🔵 Drinks</button>
+<button onclick="filterAisle('Pastry',this)">🟢 Pastry</button>
+<button onclick="filterAisle('Chips',this)">🟡 Chips</button>
+<button onclick="filterAisle('Fruits & Vegetables',this)">🟠 Fruits & Veg</button>
+<button onclick="filterAisle('Ramen & Instant Noodles',this)">🟣 Instant Noodles</button>
+</nav>
+
+<main>
+<section id="aisles">
+<div class="intro">
+<h2>🎨 Aisle Colour Guide</h2>
+<p>Match the colour to find the right supermarket aisle!</p>
+</div>
+<div class="guide" style="--c:#2563eb"><div class="swatch"></div><div><h3>BLUE — Drinks</h3><p>Water, juice and other drinks</p></div></div>
+<div class="guide" style="--c:#168447"><div class="swatch"></div><div><h3>GREEN — Pastry</h3><p>Bread, muffins and bakery items</p></div></div>
+<div class="guide" style="--c:#eab308"><div class="swatch"></div><div><h3>YELLOW — Chips</h3><p>Potato chips and crunchy snacks</p></div></div>
+<div class="guide" style="--c:#ea580c"><div class="swatch"></div><div><h3>ORANGE — Fruits & Vegetables</h3><p>Fresh fruit and vegetables</p></div></div>
+<div class="guide" style="--c:#7c3aed"><div class="swatch"></div><div><h3>PURPLE — Ramen & Instant Noodles</h3><p>Instant noodles and ramen packs</p></div></div>
+<div class="intro"><b>💡 Shopping tip</b><p>Look for the matching aisle colour to find products more easily!</p></div>
+</section>
+
+<section id="promos" class="hidden">
+<div class="intro">
+<h2>🏷️ Sales & Promos</h2>
+<p>Check out these example offers by aisle.</p>
+<p class="note">These are sample promotions for demonstration, not live supermarket prices.</p>
+</div>
+<div class="grid" id="products"></div>
+</section>
 </main>
+
+<footer>SMART SHOPPER • Scan. Match. Save.</footer>
+
+<script>
+const items=[
+{name:"Fruit Drink (1 L)",aisle:"Drinks",color:"#2563eb",normal:3.50,sale:3.05},
+{name:"Chocolate Muffins (2-pack)",aisle:"Pastry",color:"#168447",normal:5.00,sale:4.35},
+{name:"Potato Chips (150 g)",aisle:"Chips",color:"#eab308",normal:6.90,sale:5.99},
+{name:"Apples (per pack)",aisle:"Fruits & Vegetables",color:"#ea580c",normal:8.00,sale:6.96},
+{name:"Instant Curry Noodles (5-pack)",aisle:"Ramen & Instant Noodles",color:"#7c3aed",normal:5.79,sale:4.79}
+];
+const money=n=>"RM"+n.toFixed(2);
+function render(list){
+document.getElementById("products").innerHTML=list.map(p=>{
+let saved=p.normal-p.sale;
+let percent=Math.round(saved/p.normal*100);
+return `<article class="promo">
+<span class="tag" style="color:${p.color}">${p.aisle}</span>
+<h3>${p.name}</h3>
+<div class="price"><span class="old">${money(p.normal)}</span><br>
+<span class="new">${money(p.sale)}</span></div>
+<div class="save">🎉 ${percent}% OFF · Save ${money(saved)}</div>
+</article>`;
+}).join("")||"<p>No sample offers in this aisle yet.</p>";
+}
+function showPage(page,btn){
+document.getElementById("aisles").classList.toggle("hidden",page!=="aisles");
+document.getElementById("promos").classList.toggle("hidden",page!=="promos");
+document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+}
+function filterAisle(aisle,btn){
+document.getElementById("aisles").classList.add("hidden");
+document.getElementById("promos").classList.remove("hidden");
+render(items.filter(p=>p.aisle===aisle));
+document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+}
+document.querySelector('button[onclick="showPage(\\'promos\\',this)"]');
+render(items);
+document.querySelectorAll("nav button")[1].addEventListener("click",()=>render(items));
+</script>
 </body>
 </html>
+
