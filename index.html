@@ -109,7 +109,6 @@ render(items.filter(p=>p.aisle===aisle));
 document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
 btn.classList.add("active");
 }
-document.querySelector('button[onclick="showPage(\\'promos\\',this)"]');
 render(items);
 document.querySelectorAll("nav button")[1].addEventListener("click",()=>render(items));
 </script>
